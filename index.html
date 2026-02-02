@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To-Do List - minirang X junnyontop-pixel</title>
+    <!--Google Fonts--><!--Roboto-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="img/logo.svg" type="image/svg+xml" />
+
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div id="input-area"><!--쉬운 레이아웃 제어를 위해-->
+            <input type="text" id="taskInput" placeholder="할 일을 입력하세요...">
+            <button id="addTaskButton">추가</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+</body>
+</html>
