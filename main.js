@@ -1,3 +1,4 @@
+//by junnyontop-pixel
 const addBtn = document.getElementById("addTaskButton");
 const taskInput = document.getElementById("taskInput"); // 입력창 참조 추가
 const taskList = document.getElementById("taskList");
