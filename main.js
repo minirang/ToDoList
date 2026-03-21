@@ -1,33 +1,69 @@
-//by junnyontop-pixel
 const addBtn = document.getElementById("addTaskButton");
-const taskInput = document.getElementById("taskInput"); // 입력창 참조 추가
+const taskInput = document.getElementById("taskInput");
 const taskList = document.getElementById("taskList");
-
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach(task => {
+        createTaskElement(task.text, task.completed);
+    });
+}
+function saveTasks() {
+    const tasks = [];
+    document.querySelectorAll("#taskList li").forEach(li => {
+        const checkbox = li.querySelector("input[type='checkbox']");
+        const span = li.querySelector("span");
+        tasks.push({
+            text: span.textContent.trim(),
+            completed: checkbox.checked
+        });
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+function createTaskElement(text, completed = false) {
+    const li = document.createElement("li");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = completed;
+    const span = document.createElement("span");
+    span.textContent = text;
+    if (completed) {
+        span.classList.add("done");
+    }
+    checkbox.addEventListener("change", () => {
+        span.classList.toggle("done", checkbox.checked);
+        saveTasks();
+    });
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "수정";
+    editBtn.addEventListener("click", () => {
+        const newText = prompt("수정할 내용을 입력하세요", span.textContent.trim());
+        if (newText !== null && newText.trim() !== "") {
+            span.textContent = newText.trim();
+            span.classList.toggle("done", checkbox.checked);
+            saveTasks();
+        }
+    });
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "삭제";
+    deleteBtn.addEventListener("click", () => {
+        li.remove();
+        saveTasks();
+    });
+    li.appendChild(checkbox);
+    li.appendChild(span);
+    li.appendChild(editBtn);
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
+}
 addBtn.addEventListener("click", () => {
     const taskValue = taskInput.value;
-
-    if (taskValue === "") {
+    if (taskValue === "" || taskValue.trim() === "") {
         alert("할 일을 입력해주세요!");
         return;
     }
-
-    // 1. li 생성
-    const li = document.createElement("li");
-
-    // 2. 체크박스 생성
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-
-    // 3. 텍스트 추가
-    const textNode = document.createTextNode(" " + taskValue);
-
-    // 4. 조립: li 안에 체크박스와 텍스트를 넣음
-    li.appendChild(checkbox);
-    li.appendChild(textNode);
-
-    // 5. 완성된 li를 전체 리스트(ul)에 추가
-    taskList.appendChild(li);
-
+    createTaskElement(taskValue);
+    saveTasks();
     taskInput.value = "";
     taskInput.focus();
 });
+loadTasks();
