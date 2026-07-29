@@ -1,4 +1,4 @@
 # ToDoList
-A simple to do list app that collaborated with junnyontop-pixel.
+junnyontop-pixel과 협업해 만든 간단한 투두리스트 사이트.
 <br>
-but removed dark and light mode and button.
+사용자 경험 개선을 위해 엉성하던 다크/라이트 모드를 제거
